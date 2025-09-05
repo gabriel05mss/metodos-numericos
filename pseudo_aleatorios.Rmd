@@ -1,0 +1,45 @@
+---
+title: "Algoritmos para geração de números pseudo-aleatorios"
+author: "Gabriel Moreira da Silva"
+date: "2025-09-04"
+output: pdf_document
+---
+
+## Método Congruente Linear Multiplicativo
+
+*Algoritmo*
+
+*Passo 1*: Definir um valor inicial $x_0$ (*seed*);
+*Passo 2*: Calcular recurssivamente os sucessivos valores $x_n, para \space n\ge 1$ por $x_n = ax_{n-1} \space mod \space m$ 
+*Passo 3*: para aproximar de um distribuição uniforme(0,1), calculamos: $x_n/m$
+
+```{r}
+unif <- function(n, seed, a = 16807, m = 2147483647) {
+  x <- numeric(n)
+  x[1] <- (a * seed) %% m
+  for (i in 2:n) {
+    x[i] <- (a * x[i-1]) %% m
+  }
+  return(x/m)
+}
+```
+
+##  Geradores congruenciais mistos
+
+*Algoritmo*
+
+*Passo 1*: Definir um valor inicial $x_0$ (*seed*);
+*Passo 2*: Calcular recurssivamente os sucessivos valores $x_n, para \space n\ge 1$ por $x_n = (ax_{n-1}+ c) \space mod \space m$ 
+*Passo 3*: para aproximar de um distribuição uniforme(0,1), calculamos: $x_n/m$
+
+```{r}
+uniforme <- function(n, seed, a = 16807, m = 2147483647, c = 1933) {
+  x <- numeric(n)
+  x[1] <- (a * seed + c) %% m
+  for (i in 2:n) {
+    x[i] <- (a * x[i-1] + c) %% m
+  }
+  return(x/m)
+}
+```
+
